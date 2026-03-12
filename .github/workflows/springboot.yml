@@ -1,6 +1,11 @@
 name: Spring Boot with GitHub Actions
 on:
-  # push:
+  push:
+    paths:
+      - 'src/**'
+      - 'pom.xml'
+      - 'Dockerfile'
+      - '.github/workflows/**'
   workflow_dispatch:
     
 
