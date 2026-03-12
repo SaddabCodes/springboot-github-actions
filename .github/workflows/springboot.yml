@@ -1,4 +1,45 @@
-name: springboot.yml
+name: Spring Boot with GitHub Actions
 on:
+  push:
 
 jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
+      - name: Build and Test (Maven)
+        run: mvn -B clean verify
+
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: target/surefire-reports
+
+  docker-build-test:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Checkout Code
+          run: echo ""
+
+        - name: Set JDK
+          run: echo ""
+
+        - name: Build JAR for DockerHub
+          run: echo ""
+
+        - name: Login to DockerHub
+          run: echo ""
+
+        - name: Build and push docker image
+          run: echo ""
