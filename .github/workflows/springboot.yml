@@ -27,19 +27,30 @@ jobs:
 
   docker-build-test:
       runs-on: ubuntu-latest
+      needs: build-test
 
       steps:
         - name: Checkout Code
-          run: echo ""
+          uses: actions/checkout@v4
 
-        - name: Set JDK
-          run: echo ""
+        - name: Setup JDK
+          uses: actions/setup-java@v5
+          with:
+            distribution: 'temurin'
+            java-version: 21
 
         - name: Build JAR for DockerHub
-          run: echo ""
+          run: mvn -B clean package -DskipTests
 
-        - name: Login to DockerHub
-          run: echo ""
+        - name: Login to Docker Hub
+          uses: docker/login-action@v4
+          with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
 
         - name: Build and push docker image
-          run: echo ""
+          uses: docker/build-push-action@v6
+          with:
+            context: .
+            push: true
+            tags: saddab/springboot-app:latest
