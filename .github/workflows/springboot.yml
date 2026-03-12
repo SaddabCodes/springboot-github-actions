@@ -1,6 +1,8 @@
 name: Spring Boot with GitHub Actions
 on:
-  push:
+  # push:
+  workflow_dispatch:
+    
 
 jobs:
   build-test:
